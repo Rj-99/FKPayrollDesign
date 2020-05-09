@@ -5,6 +5,7 @@ class HourlySalary implements Salaried
     private double hoursWorked;
     private double extraHours;
     private double dailyRate;
+    private TimeCard card;
     
     double getHoursWorked()
     {
@@ -16,6 +17,16 @@ class HourlySalary implements Salaried
         return extraHours;
     }
 
+    void setTimeCard(TimeCard card)
+    {
+        this.card = card;
+    }
+
+    TimeCard getTimeCard()
+    {
+        return card;
+    }
+    
     double getRate()
     {
         return dailyRate;
@@ -31,7 +42,7 @@ class HourlySalary implements Salaried
         extraHours = 0.0;
     }
 
-    void updateHoursWorked(TimeCard card)
+    void updateHoursWorked()
     {
         if(card.getDuration() <= 8.0)
             hoursWorked += card.getDuration();

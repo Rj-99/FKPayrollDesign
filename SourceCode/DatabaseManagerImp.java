@@ -308,4 +308,209 @@ public class DatabaseManagerImp implements DatabaseManager
         else if(obj)
         return obj;
     }
+
+    public void Payroll(boolean isEndOfWeek, boolean isEndOfFortnight, boolean isEndofMonth)
+    {
+        Gson gsonread = new GsonBuilder().registerAdapterType(Employee.class, new CustomDeserializer()).create();
+        Gson gsonwrite = new GsonBuilder().serializeNulls().create();
+         
+        try(Reader reader = new FileReader("Data.json")){
+            Employee[] arr = gson.fromJson(reader, EmployeeImp[].class);
+            //System.out.println(obj);
+            Writer writer = new FileWriter("Data.json");
+            for(int i = 0; i < arr.length; i++)
+            {
+                if(isEndOfMonth)
+                {
+                    monthDuesUtil(arr[i]);
+                }
+
+                else if(isEndOfFortnight)
+                {
+                    fortnightDuesUtil(arr[i]);
+                } 
+                
+                else if(isEndOfWeek){
+                    weekDuesUtil(arr[i]);
+                }
+                
+                g.toJson(emp, new FileWriter("Data.json", true));
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println("Excption");
+        }        
+    }
+
+    public void weekDuesUtil(Employee emp)
+    {
+        double payment = 0;
+    
+        if(emp.getSalary() instanceof HourlySalary)
+        {
+            Salaried salary = emp.getSalary();
+            HourlySalary obj = (HourlySalary) salary;
+            payment += obj.calculateSalary();
+            obj.resetWorkHours();
+            emp.setSalary(obj);
+
+            if(emp.getMember() instanceof EmployeeUnion)
+            {
+                Unions mem = emp.getMember();
+                EmployeeUnion ob = (EmployeeUnion) mem;
+                double weeklycharges = ob.getWeeklyDues() + ob.getServiceCharges();
+                if(payment >= weeklycharges)
+                {
+                    payment -= weeklycharges;
+                    ob.resetServiceCharges();
+                }
+                else
+                {
+                    ob.setServiceCharges(weeklycharges - payment);
+                    payment = 0;
+                }
+                emp.setMember(ob);
+            }
+        }
+        else if(emp.getSalary() instanceof MonthlySalary)
+        {
+            if(emp.getMember() instanceof EmployeeUnion)
+            {
+                Unions mem = emp.getMember();
+                EmployeeUnion ob = (EmployeeUnion) mem;
+                ob.setServiceCharges(ob.getWeeklyDues() + ob.getServiceCharges());
+                emp.setMember(ob);
+            }   
+        }
+
+        if(payment > 0)
+        {
+            arr[i].getPayment().makePayment(payment);
+        }
+    }
+
+    public void fortnightDuesUtil(Employee emp)
+    {
+        double payment = 0;
+    
+        if(emp.getSalary() instanceof HourlySalary)
+        {
+            Salaried salary = emp.getSalary();
+            HourlySalary obj = (HourlySalary) salary;
+            payment += obj.calculateSalary();
+            obj.resetWorkHours();
+            emp.setSalary(obj);
+
+            if(emp.getMember() instanceof EmployeeUnion)
+            {
+                Unions mem = emp.getMember();
+                EmployeeUnion ob = (EmployeeUnion) mem;
+                double weeklycharges = ob.getWeeklyDues() + ob.getServiceCharges();
+                if(payment >= weeklycharges)
+                {
+                    payment -= weeklycharges;
+                    ob.resetServiceCharges();
+                }
+                else
+                {
+                    ob.setServiceCharges(weeklycharges - payment);
+                    payment = 0;
+                }
+                emp.setMember(ob);
+            }
+
+        }
+        else if(emp.getSalary() instanceof MonthlySalary)
+        {
+            if(emp.getMember() instanceof EmployeeUnion)
+            {
+                Unions mem = emp.getMember();
+                EmployeeUnion ob = (EmployeeUnion) mem;
+                ob.setServiceCharges(ob.getWeeklyDues() + ob.getServiceCharges());
+                emp.setMember(ob);
+            }   
+            
+        }
+
+        Commission com = arr[i].getCommission();
+        SalesCommission ob = (SalesCommission) com;
+        payment += ob.calculateCommission();
+        ob.resetSales();
+        arr[i].setCommission(ob);
+
+        if(payment > 0)
+        {
+            arr[i].getPayment().makePayment(payment);
+        }
+    }
+
+    public void monthDuesUtil(Employee emp)
+    {
+        double payment = 0;
+    
+        if(emp.getSalary() instanceof HourlySalary)
+        {
+            Salaried salary = emp.getSalary();
+            HourlySalary obj = (HourlySalary) salary;
+            payment += obj.calculateSalary();
+            obj.resetWorkHours();
+            emp.setSalary(obj);
+
+            if(emp.getMember() instanceof EmployeeUnion)
+            {
+                Unions mem = emp.getMember();
+                EmployeeUnion ob = (EmployeeUnion) mem;
+                double weeklycharges = ob.getWeeklyDues() + ob.getServiceCharges();
+                if(payment >= weeklycharges)
+                {
+                    payment -= weeklycharges;
+                    ob.resetServiceCharges();
+                }
+                else
+                {
+                    ob.setServiceCharges(weeklycharges - payment);
+                    payment = 0;
+                }
+                emp.setMember(ob);
+            }
+
+        }
+        else if(emp.getSalary() instanceof MonthlySalary)
+        {
+            payment += emp.getSalary().calculateSalary();
+            
+            if(emp.getMember() instanceof EmployeeUnion)
+            {
+                Unions mem = emp.getMember();
+                EmployeeUnion ob = (EmployeeUnion) mem;
+                double weeklycharges = ob.getWeeklyDues() + ob.getServiceCharges();
+                
+                if(payment >= weeklycharges)
+                {
+                    payment -= weeklycharges;
+                    ob.resetServiceCharges();
+                }
+                else
+                {
+                    ob.setServiceCharges(weeklycharges - payment);
+                    payment = 0;
+                }
+                
+                emp.setMember(ob);
+            }   
+            
+        }
+
+        Commission com = arr[i].getCommission();
+        SalesCommission ob = (SalesCommission) com;
+        payment += ob.calculateCommission();
+        ob.resetSales();
+        arr[i].setCommission(ob);
+
+        if(payment > 0)
+        {
+            arr[i].getPayment().makePayment(payment);
+        }   
+    }
 }

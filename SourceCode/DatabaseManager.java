@@ -8,5 +8,5 @@ interface DatabaseManager
     void postSalesReceipt(int ID, SalesReceipt receipt);
     void postUnionCharges(double charges);
     void changeDetails(int ID);
-    // void runPayroll(boolean isEndOfWeek, boolean isEndOfFortnight, boolean isEndofMonth);
+    void runPayroll(boolean isEndOfWeek, boolean isEndOfFortnight, boolean isEndofMonth);
 }

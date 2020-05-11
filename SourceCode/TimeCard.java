@@ -1,6 +1,8 @@
+package assignment;
+
 import java.time.LocalDate;
 
-public class TimeCard {
+class TimeCard {
     private LocalDate date;
     private double time;
 

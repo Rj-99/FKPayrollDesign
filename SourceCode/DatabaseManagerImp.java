@@ -1,28 +1,35 @@
-package assignment;
-
+package SourceCode;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.Writer;
+import java.io.FileWriter;
+import java.io.File;
+import java.io.Reader;
+import java .io.FileReader;
 import java.util.Scanner;
-class EmployeeImp implements Employee
+
+public class DatabaseManagerImp implements DatabaseManager
 {
-    private String name;
-    private String ID;
-    private Salaried salary;
-    private Unions member;
-    private Commission commission;
-    private SalesReceipt receipt;
-    private PaymentMethod payment;
 
     public void addEmployee()
     {
+        Employee emp = new Employee();
         int responseOp;
+
         try(Scanner sc = new Scanner(System.in))
         {
             
             System.out.println("Enter Employee Name:");
-            String name = sc.nextLine();
+            emp.setName(sc.nextLine());
+            
+            emp.setID(Employee.getGlobalID());
+            Employee.setGlobalID(Employee.getGlobalID() + 1);
             
             System.out.println("Enter the mode of salary:\n\t1.Hourly\n\t2.Monthly");
             responseOp = sc.nextInt();
             
+            Salaried salary = null;
+
             if(responseOp == 1)
             {
                 salary = new HourlySalary(); 
@@ -41,9 +48,13 @@ class EmployeeImp implements Employee
                 obj.setRate(sc.nextDouble());
             }
 
+            emp.setSalary(salary);
+
             System.out.println("Is the employee a Union Member?\n\t1. Yes\n\t2. No");
             responseOp = sc.nextInt();
             
+            Unions member = null;
+
             if(responseOp == 1)
             {
                 member = new EmployeeUnion();
@@ -55,22 +66,36 @@ class EmployeeImp implements Employee
             
             else if(responseOp == 2)
             {
-                member = NULL;
+                member = null;
             }
 
-            commission = new SalesCommission();
+            emp.setMember(member);
 
-            receipt = new SalesReceipt();
+            Commission commission = new SalesCommission();
+
+            if(commission instanceof SalesCommission){
+                System.out.println("Enter the sales commision rate:");
+                SalesCommission obj = (SalesCommission) commission;
+                obj.setRate(sc.nextDouble());
+            }
+
+            emp.setCommission(commission);
+
+            emp.setReceipt(new SalesReceipt());
 
             System.out.println("Enter the Payment Method for Salary:\n\t1. Mail to Postal Address\n\t2. Pickup by Paymaster\n\t3. Transfer to Bank Account");
             responseOp = sc.nextInt();
+
+            PaymentMethod payment = null;
 
             if(responseOp == 1)
             {
                 payment = new Mail();
                 Mail obj = (Mail) payment;
                 System.out.println("Enter your postal address:");
-                obj.setAddress(sc.nextLine());
+                sc.nextLine();
+                String addr = sc.nextLine();
+                obj.setAddress(addr);
             }
 
             else if(responseOp == 2)
@@ -78,13 +103,16 @@ class EmployeeImp implements Employee
                 payment = new Pickup();
                 Pickup obj = (Pickup) payment;
                 System.out.println("Enter the paymaster:");
-                obj.setPayMaster(sc.nextLine());
+                sc.nextLine();
+                String pay = sc.nextLine();
+                obj.setPayMaster(pay);
             }
 
             else if(responseOp == 3)
             {
                 payment = new BankAccount();
                 BankAccount obj = (BankAccount) payment;
+                sc.nextLine();
                 System.out.println("Enter the Bank Name:");
                 obj.setBankName(sc.nextLine());
                 System.out.println("Enter the Bank Branch:");
@@ -93,10 +121,22 @@ class EmployeeImp implements Employee
                 obj.setBankAccount(sc.nextLine());
             }
 
+            emp.setPayment(payment);
+
+            try(Writer writer = new FileWriter("Data.json", true)){
+                Gson g = new GsonBuilder().serializeNulls().create();
+                g.toJson(emp, writer);
+            }
+            catch (Exception e)
+            {
+                System.out.println("Exception");
+            }
         }
         catch(Exception e)
         {
 
         } 
     }
+
+    
 }

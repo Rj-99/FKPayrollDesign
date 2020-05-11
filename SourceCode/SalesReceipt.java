@@ -1,6 +1,8 @@
+package assignment;
+
 import java.time.LocalDate;
 
-public class SalesReceipt {
+class SalesReceipt {
     private LocalDate date;
     private double salesAmount;
 

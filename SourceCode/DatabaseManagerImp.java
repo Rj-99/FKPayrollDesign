@@ -219,4 +219,29 @@ public class DatabaseManagerImp implements DatabaseManager
         }
     }
 
+    public void postUnionCharges(double charges)
+    {
+        Gson gsonread = new GsonBuilder().registerAdapterType(Employee.class, new CustomDeserializer()).create();
+        Gson gsonwrite = new GsonBuilder().serializeNulls().create();
+         
+        try(Reader reader = new FileReader("Data.json")){
+            Employee[] arr = gson.fromJson(reader, EmployeeImp[].class);
+            //System.out.println(obj);
+            Writer writer = new FileWriter("Data.json");
+            for(int i = 0; i < arr.length; i++)
+            {
+                if(arr[i].getMember() instanceof EmployeeUnion){
+                    Unions member = arr[i].getMember();
+                    EmployeeUnion obj = (EmployeeUnion) member;
+                    obj.updateServiceCharges(charges);
+                    arr[i].setMember(obj);
+                }
+                g.toJson(emp, new FileWriter("Data.json", true));
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println("Excption");
+        }
+    }
 }

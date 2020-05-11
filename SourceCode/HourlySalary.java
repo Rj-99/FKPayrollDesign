@@ -1,4 +1,4 @@
-package assignment;
+package SourceCode;
 
 class HourlySalary implements Salaried
 {
@@ -7,42 +7,50 @@ class HourlySalary implements Salaried
     private double dailyRate;
     private TimeCard card;
     
-    double getHoursWorked()
+    public double getHoursWorked()
     {
         return hoursWorked;
     }
 
-    double getExtraHours()
+    public double getExtraHours()
     {
         return extraHours;
     }
 
-    void setTimeCard(TimeCard card)
+    public void setTimeCard(TimeCard card)
     {
         this.card = card;
     }
 
-    TimeCard getTimeCard()
+    public TimeCard getTimeCard()
     {
         return card;
     }
     
-    double getRate()
+    public double getRate()
     {
         return dailyRate;
     }
 
-    double setRate(double rate){
+    public void setRate(double rate){
         dailyRate = rate;
     }
     
-    void resetWorkHours()
+    public void resetWorkHours()
     {
         hoursWorked = 0.0;
         extraHours = 0.0;
     }
 
-    void updateHoursWorked()
+    public void setHoursWorked(double hoursWorked) {
+        this.hoursWorked = hoursWorked;
+    }
+
+    public void setExtraHours(double extraHours) {
+        this.extraHours = extraHours;
+    }
+
+    public void updateHoursWorked()
     {
         if(card.getDuration() <= 8.0)
             hoursWorked += card.getDuration();
@@ -53,7 +61,7 @@ class HourlySalary implements Salaried
         }
     }
 
-    double calculateSalary()
+    public double calculateSalary()
     {  
         return ((dailyRate * hoursWorked)
                 + (1.5 * dailyRate * extraHours));

@@ -1,20 +1,20 @@
-package assigment;
+package SourceCode;
 
 class MonthlySalary implements Salaried
 {
     private double monthlyRate;
 
-    double getRate()
+    public double getRate()
     {
         return monthlyRate;
     }
 
-    void setRate(double rate)
+    public void setRate(double rate)
     {
         monthlyRate = rate;
     }
 
-    double calculateSalary()
+    public double calculateSalary()
     {
         return monthlyRate;
     }

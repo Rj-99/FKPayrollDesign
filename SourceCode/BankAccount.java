@@ -1,4 +1,4 @@
-package assignment;
+package SourceCode;
 
 class BankAccount implements PaymentMethod
 {
@@ -6,11 +6,9 @@ class BankAccount implements PaymentMethod
     private String bankName;
     private String branch;
 
-    void makePayment(double salary)
-    {
-        System.out.println("Make a payment of " + salary +
-                " to the Bank Account "+ bankAccount +
-                " of " + bankName + " and Branch "+ branch);
+    public void makePayment(double salary) {
+        System.out.println("Make a payment of " + salary + " to the Bank Account " + bankAccount + " of " + bankName
+                + " and Branch " + branch);
     }
 
     void setBankAccount(String account)

@@ -138,5 +138,31 @@ public class DatabaseManagerImp implements DatabaseManager
         } 
     }
 
-    
+    public void DeleteEmployee(int Empid)
+    {
+        // String content;
+        Gson gsonread = new GsonBuilder().registerAdapterType(Employee.class, new CustomDeserializer()).create();
+        Gson gsonwrite = new GsonBuilder().serializeNulls().create();
+         
+        try(Reader reader = new FileReader("Data.json")){
+            Employee[] arr = gson.fromJson(reader, EmployeeImp[].class);
+            //System.out.println(obj);
+            Writer writer = new FileWriter("Data.json");
+            for(int i = 0; i < arr.length; i++)
+            {
+                if(arr[i].getID() == Empid){
+                    continue;
+                }
+                else{
+                    g.toJson(emp, new FileWriter("Data.json", true));
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println("Excption");
+        }   
+               
+    }
+
 }

@@ -1,6 +1,6 @@
-package assignment;
+package SourceCode;
 
 interface Commission
 {
-    double calculateCommission();
+    public double calculateCommission();
 }

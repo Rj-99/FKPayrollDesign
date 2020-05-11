@@ -1,21 +1,21 @@
-package assignment;
+package SourceCode;
 
 class Mail implements PaymentMethod
 {
     private String postalAddress;
 
-    void makePayment(double salary)
+    public void makePayment(double salary)
     {
         System.out.println("Make a payment of "+ salary +
                 " to the address "+ postalAddress);
     }
 
-    void setAddress(String address)
+    public void setAddress(String address)
     {
         postalAddress = address;
     }
 
-    String getAddress()
+    public String getAddress()
     {
         return postalAddress;
     }

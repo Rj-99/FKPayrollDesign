@@ -1,4 +1,4 @@
-package assignment;
+package SourceCode;
 
 interface PaymentMethod
 {

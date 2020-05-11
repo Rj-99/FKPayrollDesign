@@ -1,4 +1,4 @@
-package assigment;
+package SourceCode;
 
 interface Salaried{
     double calculateSalary();

@@ -1,21 +1,21 @@
-package assigment;
+package SourceCode;
 
 class Pickup implements PaymentMethod
 {
     private String paymaster;
 
-    void makePayment(double salary)
+    public void makePayment(double salary)
     {
         System.out.println("Make a payment of " + salary +
                 " through the paymaster "+ paymaster);
     } 
 
-    void setPayMaster(String paymaster)
+    public void setPayMaster(String paymaster)
     {
         this.paymaster = paymaster;
     }
 
-    String getPayMaster()
+    public String getPayMaster()
     {
         return paymaster;
     }

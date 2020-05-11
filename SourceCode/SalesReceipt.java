@@ -1,4 +1,4 @@
-package assignment;
+package SourceCode;
 
 import java.time.LocalDate;
 
@@ -6,28 +6,34 @@ class SalesReceipt {
     private LocalDate date;
     private double salesAmount;
 
+    public SalesReceipt()
+    {
+        date = null;
+        salesAmount = 0.0;
+    }
+
     public SalesReceipt(LocalDate date, double amount)
     {
         this.date = date;
         salesAmount = amount;
     }
 
-    double getAmount()
+    public double getAmount()
     {
         return salesAmount;
     }
 
-    void setAmount(double amount)
+    public void setAmount(double amount)
     {
         salesAmount = amount;
     }
 
-    LocalDate getDate()
+    public LocalDate getDate()
     {
         return date;
     }
 
-    void setDate(LocalDate date)
+    public void setDate(LocalDate date)
     {
         this.date = date;
     }

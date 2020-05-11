@@ -1,12 +1,12 @@
-package assignment;
+package SourceCode;
 
-interface Employee
+interface DatabaseManager
 {
     void addEmployee();
-    // void DeleteEmployee(Employee emp);
-    // void PostTimeCard();
-    // void postSalesReceipt();
-    // void postUnion();
-    // void changeDetails();
-    // void runPayroll();
+    void DeleteEmployee(int ID);
+    // void PostTimeCard(int ID, TimeCard card);
+    // void postSalesReceipt(int ID, SalesReceipt receipt);
+    // void postUnionCharges(double charges);
+    // void changeDetails(int ID);
+    // void runPayroll(boolean isEndOfWeek, boolean isEndOfFortnight, boolean isEndofMonth);
 }

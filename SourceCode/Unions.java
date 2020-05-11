@@ -1,6 +1,6 @@
-package assignment;
+package SourceCode;
 
-interface Union
+interface Unions
 {
     double getWeeklyDues();
     double getServiceCharges();

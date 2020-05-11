@@ -244,4 +244,68 @@ public class DatabaseManagerImp implements DatabaseManager
             System.out.println("Excption");
         }
     }
+
+    public void changeDetails(int Empid)
+    {
+        Gson gsonread = new GsonBuilder().registerAdapterType(Employee.class, new CustomDeserializer()).create();
+        Gson gsonwrite = new GsonBuilder().serializeNulls().create();
+         
+        try(Reader reader = new FileReader("Data.json")){
+            Employee[] arr = gson.fromJson(reader, EmployeeImp[].class);
+            //System.out.println(obj);
+            Writer writer = new FileWriter("Data.json");
+            for(int i = 0; i < arr.length; i++)
+            {
+                if(arr[i].getID() == Empid){
+                    arr[i] = changeDetailsUtil(arr[i]);
+                }
+                g.toJson(emp, new FileWriter("Data.json", true));
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println("Excption");
+        }
+    }
+
+    public Employee changeDetailsUtil(Employee obj)
+    {
+        int i = 1;
+        System.out.println("Enter the details to be changed:");
+        System.out.println(i+". name");
+        i++;
+
+        if(obj.getSalary() instanceof HourlySalary)
+        {
+            System.out.println(i+". Hourly rate");
+            i++;
+        }
+        else if(obj.getSalary() instanceof MonthlySalary)
+        {
+            System.out.println(i+". Monthly Rate");
+            i++;
+        }
+        
+        System.out.println(i+". Sales Commision Rate");
+        i++;
+
+        if(obj.getMember() instanceof EmployeeUnion)
+        {
+            System.out.println(i+". Union Weekly dues");
+            i++;
+        }
+
+        if(obj.getPayment() instanceof Mail)
+        {
+            System.out.println(i+". Change Postal Address");
+            i++;
+        }
+        else if(obj.getPayment() instanceof Pickup)
+        {
+            System.out.println(i+". Change Paymaster");
+            i++;
+        } 
+        else if(obj)
+        return obj;
+    }
 }
